@@ -1,0 +1,43 @@
+#+TITLE: xmonad-keybindings-query
+
+This module allows you to create XMonad key-bindings that do different things
+depending on the current window state.
+
+*Warning:* This module is very new and I am still a journeyman with respect to
+Haskell development. There is likely room for improvement here.
+
+* Basic Usage
+
+This module works similarly to [[https://hackage.haskell.org/package/xmonad-0.15/docs/XMonad-ManageHook.html][XMonad.ManageHook]]; however, instead of querying
+the state of a window to determine where it appear on-screen, we query it to
+decide what IO action to execute.
+
+#+BEGIN_SRC haskell
+import XMonad.KeyBindings.Query
+
+main = xmonad def `additionalKeys`
+          [ ((mod4Mask .|. shiftMask, xK_z), appSpecificKey)
+          , ((mod4Mask .|. shiftMask, xK_x), appSpecificKeyWithDefault)
+          ]
+  where
+    appSpecificKey = queryFocused' $ composeOne
+      [ isDialog               -?> safeSpawn "notify-send" ["this is a dialog"]
+      , className =? "firefox" -?> safeSpawn "notify-send" ["firefox is focused"]
+      ]
+
+    appSpecificKeyWithDefault = queryFocused defaultAction $ composeAll
+      [ isDialog              -?> safeSpawn "notify-send" ["this is a dialog"]
+      , title =? "Save Image" -?> safeSpawn "notify-send" ["this is a save image dialog"]
+      ]
+
+    defaultAction = safeSpawn "notify-send" ["no window is focused"]
+#+END_SRC
+
+* Things to try
+
+Here are some ideas you can try:
+
+- App-specific hotkeys. You can use configure the same hotkeys to do different
+  things, depending on what window is currently focused.
+- Desktop hotkeys. You can define hotkeys for only when no window is focused.
+  Why not define a bunch of hotkeys to launch your favourite apps in this case?

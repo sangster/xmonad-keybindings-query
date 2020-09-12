@@ -1,0 +1,36 @@
+name:       xmonad-keybindings-query
+version:    0.1.0.0
+github:     "sangster/xmonad-keybindings-query"
+license:    BSD3
+author:     "Jon Sangster"
+maintainer: "jon@ertt.ca"
+copyright:  "Jon Sangster"
+
+extra-source-files:
+  - LICENSE
+  - README.org
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+description: Please see the README on GitHub at <https://github.com/sangster/xmonad-keybindings-query>
+
+dependencies:
+  - base         >= 4.7 && < 5.0
+  - data-default >= 0.7 && < 1.0
+
+library:
+  source-dirs:
+    - lib
+
+  dependencies:
+    - base >= 4.7 && < 5
+    - xmonad >= 0.13 && < 1
+    - xmonad-contrib >= 0.13 && < 1
+
+  ghc-options:
+    - -O2
+    - -Wall
+    - -Werror
+    - -fno-warn-missing-signatures
