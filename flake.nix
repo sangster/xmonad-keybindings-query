@@ -5,7 +5,8 @@
     flake-utils.url = "github:numtide/flake-utils/master";
   };
 
-  description = "Interactively browse the dependency graph of your Nix derivations.";
+  description = "Allows you to create XMonad key-bindings that do different " +
+                "things depending on the current window state.";
 
   outputs = { self, nixpkgs, flake-utils }:
     let
