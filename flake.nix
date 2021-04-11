@@ -5,8 +5,7 @@
     flake-utils.url = "github:numtide/flake-utils/master";
   };
 
-  description = "Allows you to create XMonad key-bindings that do different " +
-                "things depending on the current window state.";
+  description = "Allows you to create XMonad key-bindings that do different things depending on the current window state.";
 
   outputs = { self, nixpkgs, flake-utils }:
     let
