@@ -1,7 +1,7 @@
 # Inspiration: https://github.com/utdemir/nix-tree/blob/65dffe179b5d0fcf44d173ea2910f43ed187e136/flake.nix
 {
   inputs = {
-    flake-utils.url = "github:numtide/flake-utils/master";
+    flake-utils.url = github:numtide/flake-utils?rev=74f7e4319258e287b0f9cb95426c9853b282730b;
   };
 
   description = "Allows you to create XMonad key-bindings that do different things depending on the current window state.";
