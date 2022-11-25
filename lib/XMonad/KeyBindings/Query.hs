@@ -99,8 +99,7 @@ queryState :: (XState -> Maybe Window)
            -> X a
            -> Query a
            -> X a
-queryState f fallback q = f <$> get
-                      >>= maybe fallback (runQuery q)
+queryState f fallback q = get >>= maybe fallback (runQuery q) . f
 
 
 -- | Like "queryState", but does nothing if the given function returns

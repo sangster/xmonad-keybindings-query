@@ -9,12 +9,16 @@
     let
       inherit (nixpkgs.lib) composeExtensions;
 
+      name = "xmonad-keybindings-query";
       overlay = (final: prev: {
         haskellPackages = prev.haskellPackages.override (old: {
           overrides = composeExtensions
             (old.overrides or (_: _: {}))
-            (hfinal: hprev: {
-              xmonad-keybindings-query = hprev.callCabal2nix "xmonad-keybindings-query" ./. {};
+            (_hfinal: hprev: {
+              xmonad-keybindings-query = hprev.developPackage {
+                inherit name;
+                root = self;
+              };
             });
         });
       });
@@ -24,9 +28,9 @@
       let
         pkgs = import nixpkgs { inherit system; overlays = [ overlay ]; };
       in rec {
-        defaultPackage = packages.xmonad-keybindings-query;
         packages = flake-utils.lib.flattenTree {
           inherit (pkgs.haskellPackages) xmonad-keybindings-query;
+          default = packages.xmonad-keybindings-query
         };
       }
     );
