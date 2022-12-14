@@ -30,7 +30,7 @@
       in rec {
         packages = flake-utils.lib.flattenTree {
           inherit (pkgs.haskellPackages) xmonad-keybindings-query;
-          default = packages.xmonad-keybindings-query
+          default = packages.xmonad-keybindings-query;
         };
       }
     );
