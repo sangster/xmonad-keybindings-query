@@ -17,8 +17,8 @@
 #
 # resolver: ./custom-snapshot.yaml
 # resolver: https://example.com/snapshots/2018-01-01.yaml
-resolver: lts-19.31
-compiler: ghc-9.0.1
+resolver: lts-22.25
+compiler: ghc-9.6.5
 
 local-bin-path: ./bin
 

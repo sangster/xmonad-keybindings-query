@@ -1,5 +1,6 @@
 {
   inputs = {
+    nixpkgs.url = github:nixos/nixpkgs?ref=24.05;
     flake-utils.url = github:numtide/flake-utils?rev=74f7e4319258e287b0f9cb95426c9853b282730b;
   };
 
@@ -27,10 +28,10 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; overlays = [ overlay ]; };
-      in rec {
-        packages = flake-utils.lib.flattenTree {
+      in {
+        packages = flake-utils.lib.flattenTree rec {
           inherit (pkgs.haskellPackages) xmonad-keybindings-query;
-          default = packages.xmonad-keybindings-query;
+          default = xmonad-keybindings-query;
         };
       }
     );
