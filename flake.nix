@@ -1,7 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs?ref=24.05;
     flake-utils.url = github:numtide/flake-utils?rev=74f7e4319258e287b0f9cb95426c9853b282730b;
+    nixpkgs.url = github:nixos/nixpkgs?ref=nixos-24.11;
   };
 
   description = "Allows you to create XMonad key-bindings that do different things depending on the current window state.";
