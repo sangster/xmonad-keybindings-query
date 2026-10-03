@@ -1,13 +1,13 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.38.1.
+-- This file has been generated from package.yaml by hpack version 0.39.1.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 67f5fdb8acf7f0dad1681a419be377b8d8531849377c916579221c3af627c99f
+-- hash: c684576020651c6d9f97c6a9cd6469422a632e65dbf586cccd7e382f9f731044
 
 name:           xmonad-keybindings-query
-version:        0.3.1
+version:        0.5.0
 description:    Please see the README on GitHub at <https://github.com/sangster/xmonad-keybindings-query>
 homepage:       https://github.com/sangster/xmonad-keybindings-query#readme
 bug-reports:    https://github.com/sangster/xmonad-keybindings-query/issues
