@@ -13,6 +13,7 @@ the state of a window to determine where it appear on-screen, we query it to
 decide what IO action to execute.
 
 #+BEGIN_SRC haskell
+import XMonad.Hooks.ManageHelpers (composeOne, isDialog, (-?>))
 import XMonad.KeyBindings.Query
 
 main = xmonad def `additionalKeys`

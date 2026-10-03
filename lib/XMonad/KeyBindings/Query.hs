@@ -11,6 +11,7 @@
 -- This module provides helper function to query XMonad's state before running
 -- an "X" action.
 --
+-- > import XMonad.Hooks.ManageHelpers (composeOne, isDialog, (-?>))
 -- > import XMonad.KeyBindings.Query
 -- > main =
 -- >     xmonad def `additionalKeys`
@@ -25,43 +26,22 @@
 -- This module is heavily inspired by Spencer Janssen and Lukas Mai's work in
 -- "XMonad.ManageHook" and "XMonad.Hooks.ManageHelpers", respectively.
 --
--- Note: This module reimplements some functions from
--- "XMonad.Hooks.ManageHelpers", with more general type-signatures. They
--- function identically, so the versions exported from this module can be used
--- in both cases.
+-- Note: Since xmonad-contrib 0.18, the combinators in
+-- "XMonad.Hooks.ManageHelpers" (such as "composeOne", "-?>", "-->>", and
+-- "-?>>") are generalised over any "Monad", so they work with "Query" directly
+-- and are not duplicated here.
 
 
 module XMonad.KeyBindings.Query (
-    Match(..),
-
     -- * Query Helpers
     -- $helpers
     queryFocused, queryFocused',
-    queryState, queryState',
-
-    -- * Compositions
-    -- $compose
-    composeAll, composeOne,
-
-    -- * ???
-    (/=?), (<==?), (</=?),
-    (-->), (=?), (<&&>), (<||>),
-    (-?>), (-->>), (-?>>),
-    title, appName, className, stringProperty
+    queryState, queryState'
   ) where
 
-import Data.Bool (bool)
 import XMonad
 import XMonad.StackSet (peek)
-import XMonad.Hooks.ManageHelpers ((/=?), (<==?), (</=?))
 
-
--- | A grouping type which can hold the outcome of a predicate Query.
--- This is analogous to group types in regular expressions.
-data Match a = Match Bool a
-
-
-infixr 0 -?>, -->>, -?>>
 
 {- $helpers
 "queryFocused" is the primary function exported by this module. It allows you to
@@ -108,47 +88,3 @@ queryState' :: (XState -> Maybe Window)
             -> Query ()
             -> X ()
 queryState' f = queryState f idHook
-
-
-{- $compose
-"composeOne" and "composeAll" are the same as their counterparts exported by
-"XMonad.Hooks.ManageHelpers" and "XMonad.ManageHook". The versions exported by
-this module have more generic signatures, so you can use them both for
-ManageHooks and this.
--}
-
--- | Like "composeAll", but it stops at the first element that returns a "Just".
-composeOne :: Monoid a
-           => [Query (Maybe a)]
-           -> Query a
-composeOne = foldr (\q z -> q >>= maybe z return) idHook
-
-
--- | A helper operator for use in "composeOne". It takes a condition and an
--- action; if the condition fails, it returns "Nothing" from the "Query" so
--- "composeOne" will go on and try the next rule.
-(-?>) :: Query Bool
-      -> Query a
-      -> Query (Maybe a)
-p -?> f = p >>= bool (pure Nothing) (Just <$> f)
-
-
--- | A helper operator for use in "composeAll". It takes a condition and a
--- function taking a grouped datum to action. If "p" is true, it executes the
--- resulting action.
-(-->>) :: Monoid b
-       => Query (Match a)
-       -> (a -> Query b)
-       -> Query b
-p -->> f = p >>= \(Match b m) -> bool mempty (f m) b
-
-
--- | A helper operator for use in "composeOne". It takes a condition and a
--- function taking a groupdatum to action. If "p" is true, it executes the
--- resulting action. If it fails, it returns "Nothing" from the "Query" so
--- "composeOne" will go on and try the next rule.
-(-?>>) :: Monoid b
-       => Query (Match a)
-       -> (a -> Query b)
-       -> Query (Maybe b)
-p -?>> f = p >>= \(Match b m) -> bool mempty (Just <$> f m) b

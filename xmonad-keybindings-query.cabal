@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c684576020651c6d9f97c6a9cd6469422a632e65dbf586cccd7e382f9f731044
+-- hash: 063ce471b49fbec2639395b7ca7f47a5a50d4ebfd5d64dc08fcd94718ff1d6d2
 
 name:           xmonad-keybindings-query
-version:        0.5.0
+version:        0.6.0
 description:    Please see the README on GitHub at <https://github.com/sangster/xmonad-keybindings-query>
 homepage:       https://github.com/sangster/xmonad-keybindings-query#readme
 bug-reports:    https://github.com/sangster/xmonad-keybindings-query/issues
@@ -32,10 +32,9 @@ library
       Paths_xmonad_keybindings_query
   hs-source-dirs:
       lib
-  ghc-options: -O2 -Wall -Werror -fno-warn-missing-signatures
+  ghc-options: -O2 -Wall
   build-depends:
-      base >=4.7 && <5
-    , data-default >=0.7 && <1.0
-    , xmonad >=0.13 && <1
-    , xmonad-contrib >=0.13 && <1
+      base >=4.7 && <5.0
+    , xmonad >=0.18 && <1
+    , xmonad-contrib >=0.18 && <1
   default-language: Haskell2010
